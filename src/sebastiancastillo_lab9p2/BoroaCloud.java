@@ -15,6 +15,9 @@ public class BoroaCloud extends javax.swing.JFrame {
      */
     public BoroaCloud() {
         initComponents();
+        Hilohora h=new Hilohora(jl_Hora);
+         Thread proceso1 = new Thread(h);
+        proceso1.start();      
     }
 
     /**
@@ -29,9 +32,9 @@ public class BoroaCloud extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jl_Hora = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jl_Fecha = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jb_subirArchivo = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -57,18 +60,18 @@ public class BoroaCloud extends javax.swing.JFrame {
         jLabel2.setText("Bienvenidos");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 130, 40));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 130, 40));
+        jl_Hora.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jl_Hora.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jl_Hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 130, 40));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Fecha de Hoy:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 130, 40));
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 130, 40));
+        jl_Fecha.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jl_Fecha.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jl_Fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 130, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 153, 153));
         jPanel3.setForeground(new java.awt.Color(255, 153, 153));
@@ -160,9 +163,7 @@ public class BoroaCloud extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -172,5 +173,7 @@ public class BoroaCloud extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jb_Guardar;
     private javax.swing.JButton jb_subirArchivo;
+    private javax.swing.JLabel jl_Fecha;
+    private javax.swing.JLabel jl_Hora;
     // End of variables declaration//GEN-END:variables
 }
