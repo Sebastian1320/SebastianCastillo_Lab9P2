@@ -14,11 +14,13 @@ public class AdminBarra extends Thread{
        private JProgressBar barra;
     private boolean avanzar;
     private boolean vive;
+    int max;
 
-    public AdminBarra(JProgressBar barra) {
+    public AdminBarra(JProgressBar barra,int max) {
         this.barra = barra;
         avanzar=true;
         vive=true;
+        this.max=max;
     }
     
     
@@ -52,16 +54,17 @@ public class AdminBarra extends Thread{
     
     @Override
     public void run(){
+        barra.setMaximum(max);
         while(vive){
             if(avanzar){
                 barra.setValue(barra.getValue()+1);
-                if(barra.getValue()==100000000){
+                if(barra.getValue()==max){
                     vive=false;
                 }                
-            } //FIN IF
+            } 
             
             try {
-                Thread.sleep(0);
+              Thread.sleep(10);
             } catch (InterruptedException ex) {
             }
         }

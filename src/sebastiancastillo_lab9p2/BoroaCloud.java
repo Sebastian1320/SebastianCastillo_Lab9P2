@@ -4,7 +4,16 @@
  */
 package sebastiancastillo_lab9p2;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -19,8 +28,8 @@ public class BoroaCloud extends javax.swing.JFrame {
     public BoroaCloud() {
         initComponents();
         Hilohora h = new Hilohora(jl_Hora, jl_Fecha);
-        Thread proceso1 = new Thread(h);
-        proceso1.start();
+        h.start();
+        jProgressBar1.setMaximum(100);
     }
 
     /**
@@ -44,7 +53,7 @@ public class BoroaCloud extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jt_text = new javax.swing.JTextArea();
         jb_Guardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,7 +90,23 @@ public class BoroaCloud extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jb_subirArchivo.setText("Subir Archivo");
+        jb_subirArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_subirArchivoMouseClicked(evt);
+            }
+        });
         jPanel3.add(jb_subirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 34, -1, -1));
+
+        jProgressBar1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jProgressBar1StateChanged(evt);
+            }
+        });
+        jProgressBar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jProgressBar1MouseClicked(evt);
+            }
+        });
         jPanel3.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 91, 264, 22));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -92,9 +117,9 @@ public class BoroaCloud extends javax.swing.JFrame {
         jLabel7.setText("Archivo");
         jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 106, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jt_text.setColumns(20);
+        jt_text.setRows(5);
+        jScrollPane1.setViewportView(jt_text);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 409, 220));
 
@@ -135,13 +160,88 @@ public class BoroaCloud extends javax.swing.JFrame {
 
     private void jb_GuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_GuardarMouseClicked
         JFileChooser jfc = new JFileChooser("./");
-        FileNameExtensionFilter f = new FileNameExtensionFilter("Texto", ".txt");
-        jfc.addChoosableFileFilter(f);
-        int seleccion=jfc.showOpenDialog(null);
-        if(seleccion==JFileChooser.APPROVE_OPTION){
-            
-        }
+        FileNameExtensionFilter filtro
+                = new FileNameExtensionFilter(
+                        "Archivos de Texto", "txt");
+        jfc.addChoosableFileFilter(filtro);
+        int seleccion = jfc.showSaveDialog(this);
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+
+                File fichero = null;
+                if (jfc.getFileFilter().getDescription().equals(
+                        "Archivos de Texto")) {
+                    fichero
+                            = new File(jfc.getSelectedFile().getPath() + ".txt");
+                } else {
+                    fichero = jfc.getSelectedFile();
+                }
+                fw = new FileWriter(fichero);
+                bw = new BufferedWriter(fw);
+                bw.write(jt_text.getText());
+                jt_text.setText("");
+                bw.flush();
+                JOptionPane.showMessageDialog(this,
+                        "Archivo guardado exitosamente");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+            }
+        }//fin IF
     }//GEN-LAST:event_jb_GuardarMouseClicked
+
+    private void jb_subirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_subirArchivoMouseClicked
+        File fichero = null;
+        jt_text.setText("");
+        jProgressBar1.setValue(0);
+        try {
+            JFileChooser jfc = new JFileChooser("./");
+            FileNameExtensionFilter filtro
+                    = new FileNameExtensionFilter(
+                            "Archivos de Texto", "txt");
+            jfc.setFileFilter(filtro);
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                fichero = jfc.getSelectedFile();
+                fr = new FileReader(fichero);
+                br = new BufferedReader(fr);
+                 AdminBarra a=new AdminBarra(jProgressBar1, 100);
+               a.start();
+            } //fin if
+
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_jb_subirArchivoMouseClicked
+
+    private void jProgressBar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jProgressBar1MouseClicked
+
+    }//GEN-LAST:event_jProgressBar1MouseClicked
+
+    private void jProgressBar1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jProgressBar1StateChanged
+
+        String linea;
+        jt_text.setText("");
+
+        try {
+            if (jProgressBar1.getValue() == jProgressBar1.getMaximum()) {
+                while ((linea = br.readLine()) != null) {
+                    jt_text.append(linea);
+                    jt_text.append("\n");
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(BoroaCloud.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jProgressBar1StateChanged
 
     /**
      * @param args the command line arguments
@@ -177,7 +277,8 @@ public class BoroaCloud extends javax.swing.JFrame {
             }
         });
     }
-
+    FileReader fr = null;
+    BufferedReader br = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -188,10 +289,10 @@ public class BoroaCloud extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jb_Guardar;
     private javax.swing.JButton jb_subirArchivo;
     private javax.swing.JLabel jl_Fecha;
     private javax.swing.JLabel jl_Hora;
+    private javax.swing.JTextArea jt_text;
     // End of variables declaration//GEN-END:variables
 }
