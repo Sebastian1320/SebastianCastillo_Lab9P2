@@ -15,7 +15,7 @@ public class BoroaCloud extends javax.swing.JFrame {
      */
     public BoroaCloud() {
         initComponents();
-        Hilohora h=new Hilohora(jl_Hora);
+        Hilohora h=new Hilohora(jl_Hora,jl_Fecha);
          Thread proceso1 = new Thread(h);
         proceso1.start();      
     }

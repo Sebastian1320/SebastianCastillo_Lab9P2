@@ -15,8 +15,10 @@ import javax.swing.JLabel;
  */
 public class Hilohora extends Thread {
      private JLabel hora;
-    public Hilohora(JLabel hora) {
+     private JLabel dia;
+    public Hilohora(JLabel hora,JLabel dia) {
         this.hora = hora;
+        this.dia=dia;
     }        
 
     
@@ -25,7 +27,9 @@ public class Hilohora extends Thread {
         while(true){
             Date h=new Date();
             DateFormat f=new SimpleDateFormat("hh:mm:ss");
+            DateFormat d=new SimpleDateFormat("dd/MM/YYYY");
             hora.setText( f.format(h) );
+            dia.setText(d.format(h));
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
