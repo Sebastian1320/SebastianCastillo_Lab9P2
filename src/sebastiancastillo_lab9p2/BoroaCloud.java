@@ -4,6 +4,9 @@
  */
 package sebastiancastillo_lab9p2;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Asus
@@ -15,9 +18,9 @@ public class BoroaCloud extends javax.swing.JFrame {
      */
     public BoroaCloud() {
         initComponents();
-        Hilohora h=new Hilohora(jl_Hora,jl_Fecha);
-         Thread proceso1 = new Thread(h);
-        proceso1.start();      
+        Hilohora h = new Hilohora(jl_Hora, jl_Fecha);
+        Thread proceso1 = new Thread(h);
+        proceso1.start();
     }
 
     /**
@@ -96,6 +99,11 @@ public class BoroaCloud extends javax.swing.JFrame {
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 409, 220));
 
         jb_Guardar.setText("Guardar");
+        jb_Guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_GuardarMouseClicked(evt);
+            }
+        });
         jb_Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_GuardarActionPerformed(evt);
@@ -124,6 +132,16 @@ public class BoroaCloud extends javax.swing.JFrame {
     private void jb_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_GuardarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_GuardarActionPerformed
+
+    private void jb_GuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_GuardarMouseClicked
+        JFileChooser jfc = new JFileChooser("./");
+        FileNameExtensionFilter f = new FileNameExtensionFilter("Texto", ".txt");
+        jfc.addChoosableFileFilter(f);
+        int seleccion=jfc.showOpenDialog(null);
+        if(seleccion==JFileChooser.APPROVE_OPTION){
+            
+        }
+    }//GEN-LAST:event_jb_GuardarMouseClicked
 
     /**
      * @param args the command line arguments
